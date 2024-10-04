@@ -32,8 +32,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-- task: IISWebAppDeploymentOnMachineGroup@0
-  inputs:
-    WebSiteName: 'testapp001'
-    Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
