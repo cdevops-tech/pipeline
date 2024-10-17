@@ -20,23 +20,18 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: build
-    projects: '$(solution)'
+    projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
+- task: DotNetCoreCLI@2
+  displayName: Publish
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(buildConfiguration) --output $(Bulid.ArtifactStagingDirectory)'
